@@ -1,0 +1,21 @@
+﻿<Page x:Class="VISwpf.Pages.PageBriefings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VISwpf.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageBriefings">
+
+    <Grid>
+        <DataGrid x:Name="DataGridBriefings" IsReadOnly="True" ItemsSource="{Binding ListEmployeePreview}" AutoGenerateColumns="False" CanUserReorderColumns="True"  HorizontalAlignment="Stretch" Height="Auto" Margin="10,10,10,10" VerticalAlignment="Stretch" Width="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Date_briefing, StringFormat={}{0:dd-MM-yyyy}}" Header="Дата проведения" Width="110" MaxWidth="150"/>
+                <DataGridTextColumn Binding="{Binding Type_briefing}" Header ="Тип" Width="110" MaxWidth="250"/>
+                <DataGridTextColumn Binding="{Binding Cause_briefing}" Header ="Причина" Width="110" MaxWidth="250"/>
+                <DataGridTextColumn Binding="{Binding Note_briefing}" Header ="Примечание" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

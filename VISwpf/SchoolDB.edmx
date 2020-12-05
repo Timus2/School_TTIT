@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище SchoolDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Briefing">
+          <Key>
+            <PropertyRef Name="ID_briefing" />
+          </Key>
+          <Property Name="ID_briefing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date_briefing" Type="date" Nullable="false" />
+          <Property Name="Type_briefing" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Cause_briefing" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Note_briefing" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="ID_division" />
+          </Key>
+          <Property Name="ID_division" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_division" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Class_work" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="ID_employee" />
+          </Key>
+          <Property Name="ID_employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Last_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Middle_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="FK_position" Type="int" Nullable="false" />
+          <Property Name="FK_division" Type="int" Nullable="false" />
+          <Property Name="Status_empl" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Employees_briefings">
+          <Key>
+            <PropertyRef Name="ID_briefing" />
+          </Key>
+          <Property Name="ID_briefing" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_employee" Type="int" Nullable="false" />
+          <Property Name="FK_briefing" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="ID_position" />
+          </Key>
+          <Property Name="ID_position" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_position" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "SchoolDB.dbo.Full_employees" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Full_employees">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="FIO" />
+            <PropertyRef Name="Birthday" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="82" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="Status_empl" Type="nvarchar" MaxLength="10" />
+          <Property Name="Name_division" Type="nvarchar" MaxLength="40" />
+          <Property Name="Name_position" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK__Employees__FK_br__2E1BDC42">
+          <End Role="Briefing" Type="Self.Briefing" Multiplicity="1" />
+          <End Role="Employees_briefings" Type="Self.Employees_briefings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Briefing">
+              <PropertyRef Name="ID_briefing" />
+            </Principal>
+            <Dependent Role="Employees_briefings">
+              <PropertyRef Name="FK_briefing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__FK_di__286302EC">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="ID_division" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_division" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__FK_em__2D27B809">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees_briefings" Type="Self.Employees_briefings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="ID_employee" />
+            </Principal>
+            <Dependent Role="Employees_briefings">
+              <PropertyRef Name="FK_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__Statu__276EDEB3">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID_position" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SchoolDBModelContainer">
+          <EntitySet Name="Briefing" EntityType="Self.Briefing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees_briefings" EntityType="Self.Employees_briefings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Full_employees" EntityType="Self.Full_employees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Full_employees].[ID] AS [ID], 
+    [Full_employees].[FIO] AS [FIO], 
+    [Full_employees].[Birthday] AS [Birthday], 
+    [Full_employees].[Status_empl] AS [Status_empl], 
+    [Full_employees].[Name_division] AS [Name_division], 
+    [Full_employees].[Name_position] AS [Name_position]
+    FROM [dbo].[Full_employees] AS [Full_employees]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Employees__FK_br__2E1BDC42" Association="Self.FK__Employees__FK_br__2E1BDC42">
+            <End Role="Briefing" EntitySet="Briefing" />
+            <End Role="Employees_briefings" EntitySet="Employees_briefings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__FK_di__286302EC" Association="Self.FK__Employees__FK_di__286302EC">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__FK_em__2D27B809" Association="Self.FK__Employees__FK_em__2D27B809">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees_briefings" EntitySet="Employees_briefings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__Statu__276EDEB3" Association="Self.FK__Employees__Statu__276EDEB3">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Briefing">
+          <Key>
+            <PropertyRef Name="ID_briefing" />
+          </Key>
+          <Property Name="ID_briefing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date_briefing" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Type_briefing" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cause_briefing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Note_briefing" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees_briefings" Relationship="Self.FK__Employees__FK_br__2F10007B" FromRole="Briefing" ToRole="Employees_briefings" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="ID_division" />
+          </Key>
+          <Property Name="ID_division" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_division" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Class_work" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__FK_di__29572725" FromRole="Division" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="ID_employee" />
+          </Key>
+          <Property Name="ID_employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Last_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Middle_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FK_position" Type="Int32" Nullable="false" />
+          <Property Name="FK_division" Type="Int32" Nullable="false" />
+          <Property Name="Status_empl" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Division" Relationship="Self.FK__Employees__FK_di__29572725" FromRole="Employees" ToRole="Division" />
+          <NavigationProperty Name="Employees_briefings" Relationship="Self.FK__Employees__FK_em__2E1BDC42" FromRole="Employees" ToRole="Employees_briefings" />
+          <NavigationProperty Name="Position" Relationship="Self.FK__Employees__Statu__286302EC" FromRole="Employees" ToRole="Position" />
+        </EntityType>
+        <EntityType Name="Employees_briefings">
+          <Key>
+            <PropertyRef Name="ID_briefing" />
+          </Key>
+          <Property Name="ID_briefing" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_employee" Type="Int32" Nullable="false" />
+          <Property Name="FK_briefing" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Briefing" Relationship="Self.FK__Employees__FK_br__2F10007B" FromRole="Employees_briefings" ToRole="Briefing" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__FK_em__2E1BDC42" FromRole="Employees_briefings" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="ID_position" />
+          </Key>
+          <Property Name="ID_position" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_position" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__Statu__286302EC" FromRole="Position" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Full_employees">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="FIO" />
+            <PropertyRef Name="Birthday" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FIO" Type="String" MaxLength="82" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status_empl" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name_division" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Name_position" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__Employees__FK_br__2F10007B">
+          <End Role="Briefing" Type="Self.Briefing" Multiplicity="1" />
+          <End Role="Employees_briefings" Type="Self.Employees_briefings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Briefing">
+              <PropertyRef Name="ID_briefing" />
+            </Principal>
+            <Dependent Role="Employees_briefings">
+              <PropertyRef Name="FK_briefing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__FK_di__29572725">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="ID_division" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_division" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__FK_em__2E1BDC42">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees_briefings" Type="Self.Employees_briefings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="ID_employee" />
+            </Principal>
+            <Dependent Role="Employees_briefings">
+              <PropertyRef Name="FK_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employees__Statu__286302EC">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID_position" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Briefing" EntityType="Self.Briefing" />
+          <EntitySet Name="Division" EntityType="Self.Division" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Employees_briefings" EntityType="Self.Employees_briefings" />
+          <EntitySet Name="Position" EntityType="Self.Position" />
+          <EntitySet Name="Full_employees" EntityType="Self.Full_employees" />
+          <AssociationSet Name="FK__Employees__FK_br__2F10007B" Association="Self.FK__Employees__FK_br__2F10007B">
+            <End Role="Briefing" EntitySet="Briefing" />
+            <End Role="Employees_briefings" EntitySet="Employees_briefings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__FK_di__29572725" Association="Self.FK__Employees__FK_di__29572725">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__FK_em__2E1BDC42" Association="Self.FK__Employees__FK_em__2E1BDC42">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees_briefings" EntitySet="Employees_briefings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employees__Statu__286302EC" Association="Self.FK__Employees__Statu__286302EC">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SchoolDBModelContainer" CdmEntityContainer="SchoolDBEntities">
+          <EntitySetMapping Name="Briefing">
+            <EntityTypeMapping TypeName="SchoolDBModel.Briefing">
+              <MappingFragment StoreEntitySet="Briefing">
+                <ScalarProperty Name="ID_briefing" ColumnName="ID_briefing" />
+                <ScalarProperty Name="Date_briefing" ColumnName="Date_briefing" />
+                <ScalarProperty Name="Type_briefing" ColumnName="Type_briefing" />
+                <ScalarProperty Name="Cause_briefing" ColumnName="Cause_briefing" />
+                <ScalarProperty Name="Note_briefing" ColumnName="Note_briefing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Division">
+            <EntityTypeMapping TypeName="SchoolDBModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="ID_division" ColumnName="ID_division" />
+                <ScalarProperty Name="Name_division" ColumnName="Name_division" />
+                <ScalarProperty Name="Class_work" ColumnName="Class_work" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="SchoolDBModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="ID_employee" ColumnName="ID_employee" />
+                <ScalarProperty Name="First_name" ColumnName="First_name" />
+                <ScalarProperty Name="Last_name" ColumnName="Last_name" />
+                <ScalarProperty Name="Middle_name" ColumnName="Middle_name" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="FK_position" ColumnName="FK_position" />
+                <ScalarProperty Name="FK_division" ColumnName="FK_division" />
+                <ScalarProperty Name="Status_empl" ColumnName="Status_empl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees_briefings">
+            <EntityTypeMapping TypeName="SchoolDBModel.Employees_briefings">
+              <MappingFragment StoreEntitySet="Employees_briefings">
+                <ScalarProperty Name="ID_briefing" ColumnName="ID_briefing" />
+                <ScalarProperty Name="FK_employee" ColumnName="FK_employee" />
+                <ScalarProperty Name="FK_briefing" ColumnName="FK_briefing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Position">
+            <EntityTypeMapping TypeName="SchoolDBModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="ID_position" ColumnName="ID_position" />
+                <ScalarProperty Name="Name_position" ColumnName="Name_position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Full_employees">
+            <EntityTypeMapping TypeName="SchoolDBModel.Full_employees">
+              <MappingFragment StoreEntitySet="Full_employees">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Status_empl" ColumnName="Status_empl" />
+                <ScalarProperty Name="Name_division" ColumnName="Name_division" />
+                <ScalarProperty Name="Name_position" ColumnName="Name_position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

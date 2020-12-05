@@ -1,0 +1,26 @@
+﻿<Window x:Class="VISwpf.AddEmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VISwpf"
+        mc:Ignorable="d"
+        Title="Добавление сотрудника" Height="410.8" Width="372.8">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="47,15,0,0" TextWrapping="Wrap" Text="Фамилия:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="73,38,0,0" TextWrapping="Wrap" Text="Имя:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="46,61,0,0" TextWrapping="Wrap" Text="Отчество:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="12,89,0,0" TextWrapping="Wrap" Text="Дата рождения:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="11,119,0,0" TextWrapping="Wrap" Text="Подразделение:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="36,146,0,0" TextWrapping="Wrap" Text="Должность:" VerticalAlignment="Top"/>
+        <TextBox x:Name="TBLastName" HorizontalAlignment="Left" Height="19" Margin="104,13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="252"/>
+        <TextBox x:Name="TBFirstName" HorizontalAlignment="Left" Height="19" Margin="104,36,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="252"/>
+        <TextBox x:Name="TBMiddleName" HorizontalAlignment="Left" Height="19" Margin="104,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="252"/>
+        <DatePicker x:Name="DatePickerBirthday" HorizontalAlignment="Left" Margin="104,84,0,0" VerticalAlignment="Top" Width="252" Height="26"/>
+        <ComboBox x:Name="DataComBoxDivision" DisplayMemberPath="Name_division" SelectedValuePath="ID_division"  HorizontalAlignment="Left" Margin="104,116,0,0" VerticalAlignment="Top" Width="252"/>
+        <ComboBox x:Name="DataComBoxPosition" DisplayMemberPath="Name_position" SelectedValuePath="ID_position" HorizontalAlignment="Left" Margin="104,143,0,0" VerticalAlignment="Top" Width="252"/>
+        <Button Content="Создать" HorizontalAlignment="Left" Margin="119,200,0,0" VerticalAlignment="Top" Width="134" Click="Button_Click"/>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="119,224,0,0" VerticalAlignment="Top" Width="134" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>
